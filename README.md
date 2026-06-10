@@ -17,7 +17,7 @@ L'objectif de cette mission est d'identifier les vulnérabilités pouvant affect
 * Produire des livrables professionnels destinés à la direction et aux équipes techniques.
 * Élaborer une feuille de route de remédiation priorisée.
 
----
+
 
 ## Périmètre de l'audit
 
@@ -34,7 +34,7 @@ L'objectif de cette mission est d'identifier les vulnérabilités pouvant affect
 * Équipements réseau externes
 * Services tiers non inclus dans le scénario
 
----
+
 
 ## Méthodologie
 
@@ -54,7 +54,7 @@ Les travaux sont organisés autour des phases suivantes :
 5. Production des livrables
 6. Recommandations et remédiation
 
----
+
 
 ## Équipe projet
 
@@ -64,7 +64,7 @@ Les travaux sont organisés autour des phases suivantes :
 * Analyste Sécurité Web
 * Analyste Sécurité Infrastructure
 
----
+
 
 ## Livrables attendus
 
@@ -74,7 +74,7 @@ Les travaux sont organisés autour des phases suivantes :
 * Plan de remédiation priorisé
 * Dossier de preuves techniques
 
----
+
 
 ## Structure du dépôt
 
