@@ -65,6 +65,6 @@ SecureBank-Audit/
 │   ├── reconnaissance/
 │   ├── juice-shop/
 │   ├── ssrf/
-│   ├── xxE/
+│   ├── xxe/
 
 ```
