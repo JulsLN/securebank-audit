@@ -1,76 +1,82 @@
-# Synthèse des Vulnérabilités – Projet SecureBank
+# Synthèse des Vulnérabilités – SecureBank
 
 ## Objectif
 
-Ce document présente une vue consolidée des vulnérabilités identifiées lors de l'audit de sécurité réalisé sur l'environnement SecureBank.
+Ce document présente une vue consolidée des vulnérabilités identifiées lors de l'audit de sécurité de l'application SecureBank.
 
-Les vulnérabilités sont classées selon leur criticité et leur impact potentiel sur la confidentialité, l'intégrité et la disponibilité du système.
+Les vulnérabilités sont classées selon leur niveau de criticité et leur impact potentiel sur la sécurité du système.
 
 ---
 
 # Résumé Exécutif
 
-L'audit a permis d'identifier plusieurs vulnérabilités affectant différents composants de l'application :
+L'audit a permis d'identifier plusieurs vulnérabilités affectant :
 
-* Authentification
-* Gestion des sessions
-* Traitement des entrées utilisateur
-* Services exposés
-* Mécanismes d'échange de données
+* L'authentification ;
+* La gestion des sessions ;
+* Le traitement des entrées utilisateur ;
+* Les mécanismes de sécurité applicative.
+
+Au total :
+
+| Niveau        | Nombre |
+| ------------- | ------ |
+| Critique      | 1      |
+| Élevée        | 1      |
+| Moyenne       | 2      |
+| Faible        | 0      |
+| Non confirmée | 1      |
 
 Le niveau de risque global est évalué comme :
 
 # CRITIQUE
 
-La présence d'une SQL Injection permettant l'obtention d'un compte administrateur constitue le risque principal identifié.
+La présence d'une vulnérabilité SQL Injection permettant l'obtention d'un accès administrateur constitue le risque principal observé.
 
 ---
 
-# Matrice de Synthèse
+# Matrice des vulnérabilités
 
-| Référence   | Vulnérabilité                                   | Catégorie OWASP                 | Gravité       | Statut        |
-| ----------- | ----------------------------------------------- | ------------------------------- | ------------- | ------------- |
-| Vuln-001    | SQL Injection Authentication Bypass             | A03 – Injection                 | Critique      | Confirmée     |
-| Vuln-002    | DOM-Based XSS                                   | A03 – Injection                 | Élevée        | Confirmée     |
-| Vuln-003    | IDOR                                            | Broken Access Control           | Non démontrée | Non confirmée |
-| Vuln-004    | Exposition d'informations sensibles dans le JWT | A02 – Cryptographic Failures    | Moyenne       | Confirmée     |
-| SSRF        | Server-Side Request Forgery                     | A10 – SSRF                      | À compléter   | À évaluer     |
-| XXE         | XML External Entity Injection                   | A05 – Security Misconfiguration | À compléter   | À évaluer     |
-| Auth-Bypass | Contournement d'authentification                | Broken Authentication           | À compléter   | À évaluer     |
+| Référence | Vulnérabilité                                             | Criticité     | Statut    |
+| --------- | --------------------------------------------------------- | ------------- | --------- |
+| Vuln-001  | SQL Injection Authentication Bypass                       | Critique      | Confirmée |
+| Vuln-002  | DOM-Based Cross-Site Scripting (XSS)                      | Élevée        | Confirmée |
+| Vuln-003  | IDOR (Broken Access Control)                              | Non confirmée | Testée    |
+| Vuln-004  | Exposition d'informations sensibles dans le JWT           | Moyenne       | Confirmée |
+| Vuln-005  | Absence de protection contre les attaques par force brute | Moyenne       | Confirmée |
 
 ---
 
-# Détail des vulnérabilités confirmées
+# Vulnérabilités confirmées
 
 ## Vuln-001 — SQL Injection Authentication Bypass
 
-### Gravité
+### Criticité
 
 **Critique**
 
 ### Description
 
-Le point d'entrée d'authentification est vulnérable à une injection SQL permettant de contourner totalement le mécanisme de connexion.
+Le formulaire d'authentification est vulnérable à une injection SQL permettant le contournement complet du mécanisme de connexion.
 
 ### Impact
 
-* Obtention d'un accès administrateur
-* Escalade de privilèges
-* Compromission complète de l'application
-* Accès aux données sensibles
+* Obtention d'un compte administrateur ;
+* Escalade de privilèges ;
+* Accès aux données sensibles ;
+* Compromission complète de l'application.
 
-### Preuves
+### Référence
 
 ```text
 Vuln-001-SQLi.md
-preuves/SQLi/
 ```
 
 ---
 
-## Vuln-002 — DOM-Based Cross-Site Scripting
+## Vuln-002 — DOM-Based Cross-Site Scripting (XSS)
 
-### Gravité
+### Criticité
 
 **Élevée**
 
@@ -80,117 +86,160 @@ La fonctionnalité de recherche permet l'exécution de code JavaScript arbitrair
 
 ### Impact
 
-* Vol de session
-* Vol de JWT
-* Exécution d'actions au nom de l'utilisateur
-* Défiguration de l'application
+* Vol de session ;
+* Vol de JWT ;
+* Exécution d'actions au nom de l'utilisateur ;
+* Défiguration de l'application.
 
-### Preuves
+### Référence
 
 ```text
 Vuln-002-XSS.md
-preuves/XSS/
 ```
 
 ---
 
 ## Vuln-004 — Exposition d'informations sensibles dans le JWT
 
-### Gravité
+### Criticité
 
 **Moyenne**
 
 ### Description
 
-Le JWT expose plusieurs informations sensibles qui ne devraient pas être accessibles au client.
+Le JWT retourné après authentification contient plusieurs informations sensibles qui ne devraient pas être accessibles côté client.
 
 ### Informations exposées
 
-* Adresse email administrative
-* Rôle administrateur
-* Hash du mot de passe
-* Métadonnées internes
+* Adresse email administrative ;
+* Rôle utilisateur ;
+* Hash du mot de passe ;
+* Métadonnées internes.
 
 ### Impact
 
-* Divulgation d'informations sensibles
-* Augmentation de l'impact d'un vol de session
-* Facilitation d'attaques ciblées
+* Divulgation d'informations sensibles ;
+* Facilitation d'attaques ciblées ;
+* Augmentation de l'impact d'un vol de session.
 
-### Preuves
+### Référence
 
 ```text
 Vuln-004-JWT.md
-preuves/JWT/
 ```
 
 ---
 
-# Vulnérabilités non confirmées
+## Vuln-005 — Absence de protection contre les attaques par force brute
 
-## Vuln-003 — IDOR
+### Criticité
 
-### Statut
+**Moyenne**
 
-Non confirmée durant la mission.
+### Description
+
+Le mécanisme d'authentification ne met pas en œuvre de protection visible contre les tentatives répétées de connexion.
 
 ### Observations
 
-Plusieurs endpoints ont été analysés :
+Les tests réalisés avec Burp Suite Intruder n'ont révélé :
+
+* Aucun verrouillage de compte ;
+* Aucun CAPTCHA ;
+* Aucun blocage IP ;
+* Aucun mécanisme de Rate Limiting.
+
+### Impact
+
+* Brute Force ;
+* Password Spraying ;
+* Credential Stuffing.
+
+### Référence
 
 ```text
-/rest/user/whoami
-/rest/basket
+Vuln-005-Weak-Authentication.md
 ```
 
-Aucune preuve suffisante n'a permis de démontrer un accès non autorisé aux ressources d'un autre utilisateur.
+---
 
-### Recommandation
+# Vulnérabilités testées mais non confirmées
 
-Maintenir les contrôles d'autorisation côté serveur et poursuivre les tests lors d'audits futurs.
+## Vuln-003 — IDOR (Broken Access Control)
+
+### Statut
+
+**Non confirmée**
+
+### Description
+
+Plusieurs endpoints ont été analysés afin de rechercher un accès non autorisé à des ressources appartenant à d'autres utilisateurs.
+
+### Endpoints testés
+
+```http
+/rest/user/whoami
+/rest/basket
+/api/Users
+```
+
+### Résultat
+
+Aucune preuve suffisante n'a permis de démontrer un accès non autorisé aux données d'un autre utilisateur.
+
+### Conclusion
+
+Aucune vulnérabilité IDOR n'a été confirmée durant la mission.
+
+### Référence
+
+```text
+Vuln-003-IDOR.md
+```
 
 ---
 
 # Chaîne d'attaque observée
 
-Les vulnérabilités identifiées peuvent être combinées pour accroître significativement le niveau de risque.
+Les vulnérabilités confirmées peuvent être combinées afin d'augmenter significativement le niveau de risque.
 
 ```text
 SQL Injection
         ↓
-Obtention d'un compte administrateur
+Obtention d'un accès administrateur
         ↓
-Récupération d'un JWT valide
+Récupération du JWT
         ↓
 Décodage du JWT
         ↓
 Accès aux informations sensibles
         ↓
-Exploitation XSS
+Exploitation potentielle via XSS
         ↓
-Vol potentiel de session
+Vol de session
 ```
 
-Cette chaîne démontre une compromission complète de l'application.
+Cette chaîne démontre qu'un attaquant pourrait compromettre totalement l'application.
 
 ---
 
-# Priorités de remédiation
+# Priorisation des risques
 
-| Priorité | Vulnérabilité | Délai recommandé |
-| -------- | ------------- | ---------------- |
-| P1       | SQL Injection | Immédiat         |
-| P2       | XSS           | < 30 jours       |
-| P3       | JWT           | < 60 jours       |
+| Priorité | Vulnérabilité                       | Niveau   |
+| -------- | ----------------------------------- | -------- |
+| P1       | SQL Injection Authentication Bypass | Critique |
+| P2       | DOM-Based XSS                       | Élevée   |
+| P3       | JWT Information Disclosure          | Moyenne  |
+| P4       | Weak Authentication Controls        | Moyenne  |
 
 ---
 
 # Conclusion
 
-L'audit a permis d'identifier deux vulnérabilités majeures directement exploitables ainsi qu'une faiblesse de conception dans la gestion des JWT.
+L'audit de sécurité réalisé sur l'environnement SecureBank a permis d'identifier quatre vulnérabilités confirmées affectant directement les mécanismes d'authentification, la gestion des sessions et la sécurité applicative.
 
-La vulnérabilité SQL Injection représente le risque le plus critique et doit être corrigée en priorité.
+La vulnérabilité SQL Injection constitue le risque principal et doit être corrigée en priorité.
 
-La combinaison des vulnérabilités observées démontre qu'un attaquant pourrait compromettre l'intégralité de l'application et accéder à des informations sensibles sans autorisation.
+La combinaison des vulnérabilités observées démontre qu'un attaquant pourrait obtenir un accès administrateur, récupérer des informations sensibles et compromettre les sessions utilisateur.
 
-La mise en œuvre du plan de remédiation permettra de réduire significativement la surface d'attaque et d'améliorer durablement la posture de sécurité de l'environnement SecureBank.
+La mise en œuvre des recommandations présentées dans le plan de remédiation permettra de réduire significativement la surface d'attaque et d'améliorer durablement la posture de sécurité globale du système.
