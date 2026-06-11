@@ -59,21 +59,12 @@ SecureBank-Audit/
 ├── preuves/
 │   ├── SQLi/
 │   ├── XSS/
-│   ├── IDOR/
-│   ├── SSRF/
-│   ├── XXE/
-│   └── Auth-Bypass/
+│   ├── JWT/
 │
 ├── captures/
 │   ├── reconnaissance/
 │   ├── juice-shop/
 │   ├── ssrf/
-│   ├── xxe/
-│   └── auth-bypass/
-│
-└── scripts/
-├── reconnaissance/
-├── exploitation/
-└── utils/
+│   ├── xxE/
 
 ```
