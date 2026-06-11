@@ -71,12 +71,6 @@ SecureBank-Audit/
 │   ├── xxe/
 │   └── auth-bypass/
 │
-├── scans/
-│   ├── nmap/
-│   ├── nikto/
-│   ├── ffuf/
-│   └── zap/
-│
 └── scripts/
 ├── reconnaissance/
 ├── exploitation/
