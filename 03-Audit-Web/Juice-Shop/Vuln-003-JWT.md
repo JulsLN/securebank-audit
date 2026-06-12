@@ -6,7 +6,6 @@
 
 **CVSS estimé : 5.3 – 6.5**
 
----
 
 ## Catégorie OWASP
 
@@ -14,7 +13,6 @@
 - A02:2021 – Cryptographic Failures
 - A07:2021 – Identification and Authentication Failures
 
----
 
 ## Endpoint concerné
 
@@ -22,7 +20,6 @@
 POST /rest/user/login
 ```
 
----
 
 ## Description
 
@@ -32,7 +29,6 @@ L'analyse du token révèle que celui-ci expose des données internes qui ne son
 
 Toute personne ayant accès au jeton peut décoder son contenu sans posséder la clé privée utilisée pour la signature.
 
----
 
 ## Méthodologie
 
@@ -41,7 +37,6 @@ Toute personne ayant accès au jeton peut décoder son contenu sans posséder la
 3. Décodage du token à l'aide de l'outil JWT.io.
 4. Analyse des informations contenues dans le payload.
 
----
 
 ## Résultat observé
 
@@ -74,7 +69,6 @@ L'algorithme utilisé (RS256) est robuste et correctement reconnu.
 }
 ```
 
----
 
 ## Informations sensibles exposées
 
@@ -100,7 +94,6 @@ L'exposition du champ :
 
 constitue une mauvaise pratique de sécurité, même lorsqu'il s'agit d'un hash.
 
----
 
 ## Observation complémentaire
 
@@ -114,7 +107,6 @@ Aucun champ d'expiration explicite n'a été identifié dans le payload :
 
 L'absence d'expiration visible peut favoriser la réutilisation prolongée d'un jeton compromis.
 
----
 
 ## Impact
 
@@ -140,7 +132,6 @@ Décodage du JWT
 Accès aux informations sensibles
 ```
 
----
 
 ## Preuves
 
@@ -179,7 +170,6 @@ Fichier :
 captures/jwt/jwt-payload.png
 ```
 
----
 
 ## Recommandations
 
@@ -224,7 +214,6 @@ Ajouter les claims suivants :
 - Invalidation côté serveur après déconnexion ;
 - Protection contre le vol de jeton via CSP et sécurisation contre les attaques XSS.
 
----
 
 ## Conclusion
 

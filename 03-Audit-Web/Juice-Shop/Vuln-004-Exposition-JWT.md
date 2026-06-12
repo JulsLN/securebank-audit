@@ -6,14 +6,12 @@
 
 **CVSS estimé : 5.5**
 
----
 
 # Référence OWASP
 
 * A02:2021 – Cryptographic Failures
 * A07:2021 – Identification and Authentication Failures
 
----
 
 # Description
 
@@ -23,7 +21,6 @@ L'analyse du jeton a révélé la présence de plusieurs informations sensibles 
 
 Bien que le JWT soit signé, son contenu est simplement encodé en Base64 et peut être décodé par tout utilisateur disposant du jeton.
 
----
 
 # Endpoint concerné
 
@@ -31,7 +28,6 @@ Bien que le JWT soit signé, son contenu est simplement encodé en Base64 et peu
 POST /rest/user/login
 ```
 
----
 
 # Méthodologie
 
@@ -40,7 +36,6 @@ POST /rest/user/login
 3. Décodage du jeton à l'aide de l'outil JWT.io.
 4. Analyse du Header et du Payload.
 
----
 
 # Résultats observés
 
@@ -59,7 +54,6 @@ L'application utilise l'algorithme RS256, considéré comme robuste.
 
 Aucune faiblesse cryptographique immédiate n'a été identifiée au niveau de la signature.
 
----
 
 ## Payload JWT
 
@@ -79,7 +73,6 @@ Aucune faiblesse cryptographique immédiate n'a été identifiée au niveau de l
 }
 ```
 
----
 
 # Informations sensibles exposées
 
@@ -93,7 +86,6 @@ Aucune faiblesse cryptographique immédiate n'a été identifiée au niveau de l
 | createdAt       | Faible      |
 | updatedAt       | Faible      |
 
----
 
 # Observation complémentaire
 
@@ -107,7 +99,6 @@ Le payload ne contient aucun champ d'expiration explicite :
 
 L'absence d'une date d'expiration visible augmente potentiellement la durée de validité d'un jeton compromis.
 
----
 
 # Impact
 
@@ -121,7 +112,6 @@ Un attaquant obtenant un JWT valide peut :
 
 Cette faiblesse devient particulièrement critique lorsqu'elle est combinée à une vulnérabilité XSS permettant le vol du JWT.
 
----
 
 # Scénario d'attaque
 
@@ -139,7 +129,6 @@ Accès aux informations sensibles
 Vol potentiel de session via XSS
 ```
 
----
 
 # Preuves
 
@@ -158,7 +147,6 @@ Capture :
 captures/JWT/jwt-header-decoded.png
 ```
 
----
 
 ## Figure 2 — Décodage du Payload JWT
 
@@ -178,7 +166,6 @@ Capture :
 captures/JWT/jwt-payload-sensitive-data.png
 ```
 
----
 
 # Recommandations
 
@@ -205,7 +192,6 @@ lastLoginIp
 deluxeToken
 ```
 
----
 
 ## Ajouter une expiration
 
@@ -219,7 +205,6 @@ Ajouter les claims suivants :
 }
 ```
 
----
 
 ## Renforcer la gestion de session
 
@@ -230,7 +215,6 @@ Mettre en place :
 * Durée de vie limitée ;
 * Réauthentification pour les actions sensibles.
 
----
 
 # Conclusion
 

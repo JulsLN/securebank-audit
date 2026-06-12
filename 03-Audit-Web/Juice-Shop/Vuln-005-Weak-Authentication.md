@@ -4,13 +4,11 @@
 
 **Moyenne**
 
----
 
 ## Référence OWASP
 
 - A07:2021 – Identification and Authentication Failures
 
----
 
 ## Endpoint concerné
 
@@ -18,7 +16,6 @@
 POST /rest/user/login
 ```
 
----
 
 ## Description
 
@@ -26,7 +23,6 @@ Le mécanisme d'authentification ne semble pas implémenter de protection effica
 
 Plusieurs tentatives de connexion invalides ont été envoyées successivement sans déclencher de mécanisme de défense observable.
 
----
 
 ## Méthodologie
 
@@ -44,7 +40,6 @@ ffff
 gggg
 ```
 
----
 
 ## Résultats observés
 
@@ -62,7 +57,6 @@ Aucun des mécanismes suivants n'a été observé :
 - blocage d'adresse IP ;
 - augmentation progressive du délai de réponse.
 
----
 
 ## Impact
 
@@ -74,7 +68,6 @@ Un attaquant pourrait automatiser :
 
 L'absence de limitation augmente considérablement les chances de compromission des comptes utilisant des mots de passe faibles ou réutilisés.
 
----
 
 ## Preuves
 
@@ -103,7 +96,6 @@ Capture :
 captures/Juice-Shop/Weak-Authentication/intruder-bruteforce-test.png
 ```
 
----
 
 ## Recommandations
 
@@ -137,7 +129,6 @@ Activer l'authentification multi-facteurs pour les comptes sensibles.
 
 Journaliser et alerter les tentatives répétées d'authentification.
 
----
 
 ## Conclusion
 
